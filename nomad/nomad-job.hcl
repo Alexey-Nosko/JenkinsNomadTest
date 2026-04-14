@@ -10,14 +10,5 @@ job "spring-app" {
         args    = ["-jar", "app.jar"]
       }
     }
-
-      resources {
-        network {
-          port "http" {
-            static = 8080
-          }
-        }
-      }
-    }
   }
 }
