@@ -27,7 +27,7 @@ pipeline {
 
         stage('Deploy to Nomad') {
             steps {
-                sh 'curl -X POST http://host.docker.internal:4646/v1/jobs -d @nomad/nomad-job.hcl'
+                sh 'nomad job run nomad/nomad-job.hcl'
             }
         }
     }
