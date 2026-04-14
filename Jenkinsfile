@@ -27,7 +27,10 @@ pipeline {
 
         stage('Deploy to Nomad') {
             steps {
-                sh 'nomad job run nomad/nomad-job.hcl'
+                sh '''
+                    export NOMAD_ADDR=http://host.docker.internal:4646
+                    nomad job run nomad/nomad-job.hcl
+                '''
             }
         }
     }
