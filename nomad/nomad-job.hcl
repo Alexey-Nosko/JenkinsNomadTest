@@ -3,12 +3,13 @@ job "spring-app" {
 
   group "app" {
     task "spring" {
-      driver = "docker"
+      driver = "raw_exec"
 
       config {
-        image = "host.docker.internal:5000/spring-app:latest"
-        ports = ["http"]
+        command = "java"
+        args    = ["-jar", "app.jar"]
       }
+    }
 
       resources {
         network {
