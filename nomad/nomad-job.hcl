@@ -2,12 +2,24 @@ job "spring-app" {
   datacenters = ["dc1"]
 
   group "app" {
+
+    network {
+      port "http" {
+        to = 9090
+      }
+    }
+
     task "spring" {
-      driver = "raw_exec"
+      driver = "docker"
 
       config {
-        command = "java"
-        args    = ["-jar", "app.jar"]
+        image = "localhost:5000/spring-app:latest"
+        ports = ["http"]
+      }
+
+      resources {
+        cpu    = 500
+        memory = 512
       }
     }
   }
