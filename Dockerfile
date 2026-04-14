@@ -1,8 +1,8 @@
-FROM eclipse-temurin:21
+FROM eclipse-temurin:21-jdk
 
-WORKDIR /build
+WORKDIR /app
 
-COPY build/libs/JenkinsNomadTest-0.0.1-SNAPSHOT.jar /build/app.jar
+COPY build/libs/*.jar app.jar
 
 EXPOSE 8080
 

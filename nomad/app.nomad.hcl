@@ -1,28 +1,21 @@
 job "spring-app" {
-
   datacenters = ["dc1"]
 
   group "app" {
-
-    count = 1
-
-    network {
-      port "http" {
-        to = 8080
-      }
-    }
-
     task "spring" {
       driver = "docker"
 
       config {
-        image = "localhost:5000/spring-app:1.0"
+        image = "host.docker.internal:5000/spring-app:latest"
         ports = ["http"]
       }
 
       resources {
-        cpu    = 500
-        memory = 256
+        network {
+          port "http" {
+            static = 8080
+          }
+        }
       }
     }
   }
