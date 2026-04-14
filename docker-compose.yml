@@ -1,0 +1,45 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+
+  nomad:
+    image: hashicorp/nomad:latest
+    container_name: nomad
+    command: [ "agent", "-config=/etc/nomad.d" ]
+    ports:
+      - "4646:4646" # HTTP API / UI
+      - "4647:4647" # RPC
+      - "4648:4648" # Serf WAN
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+
+  registry:
+    image: registry:2
+    container_name: registry
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:
+  jenkins_home:
+  nomad_data:
